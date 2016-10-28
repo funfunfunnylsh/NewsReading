@@ -1,0 +1,15 @@
+<resources>>
+
+    <!--<style name="AppTheme" parent="BaseAppTheme">-->
+        <!--<item name="android:windowTranslucentStatus">false</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+    <!--</style>-->
+
+
+    <!--全屏-->
+    <style name="Theme.DesignDemo" parent="BaseAppTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>
