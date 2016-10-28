@@ -7,12 +7,13 @@ public class Constants {
 
     public static final String NEWS_BASEURL = "http://c.m.163.com/";
 
-
-
+    /**
+     * 图片
+     */
     public static final String GANK_BASEURL = "http://gank.io/api/";
 
     /**
-     *
+     *视频
      */
     public static final String VIDEO_BASEURL = "http://wthrcdn.etouch.cn/";
 
@@ -59,6 +60,10 @@ public class Constants {
                 host = GANK_BASEURL;
                 break;
             case HostType.NEWS_DETAIL_HTML_PHOTO:
+                host = "http://kaku.com/";
+                break;
+            case HostType.VIDEO:
+
                 host = VIDEO_BASEURL;
                 break;
             default:

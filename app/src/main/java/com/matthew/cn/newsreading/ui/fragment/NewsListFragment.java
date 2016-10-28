@@ -1,20 +1,29 @@
 package com.matthew.cn.newsreading.ui.fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.matthew.cn.newsreading.R;
+import com.matthew.cn.newsreading.entity.NewsPhotoDetail;
 import com.matthew.cn.newsreading.entity.NewsSummary;
 import com.matthew.cn.newsreading.global.Constants;
 import com.matthew.cn.newsreading.mvp.news.NewsContract;
 import com.matthew.cn.newsreading.mvp.news.NewsPresentreImpl;
+import com.matthew.cn.newsreading.ui.activity.NewsDetailActivity;
 import com.matthew.cn.newsreading.ui.adapter.NewsListAdapter;
 import com.matthew.cn.newsreading.util.NetUtil;
 import com.matthew.cn.newsreading.util.SnackBarUtil;
@@ -94,12 +103,92 @@ public class NewsListFragment extends BaseFragment implements NewsContract.NewsV
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 //TODO
+                if (!TextUtils.isEmpty(newsListAdapter.getData().get(i).getDigest())) {
+                    goToNewsDetailActivity(view, i);
+
+                } else {//photo
+                    NewsPhotoDetail newsPhotoDetail = getPhotoDetail(i);
+//                    goToPhotoDetailActivity(newsPhotoDetail);
+                    //TODO
+                }
 
 
             }
         });
 
     }
+
+    private NewsPhotoDetail getPhotoDetail(int position) {
+        NewsSummary newsSummary = newsListAdapter.getData().get(position);
+        NewsPhotoDetail newsPhotoDetail = new NewsPhotoDetail();
+        newsPhotoDetail.setTitle(newsSummary.getTitle());
+        setPictures(newsSummary, newsPhotoDetail);
+        return newsPhotoDetail;
+    }
+
+    private void setPictures(NewsSummary newsSummary, NewsPhotoDetail newsPhotoDetail) {
+        List<NewsPhotoDetail.Picture> pictureList = new ArrayList<>();
+
+        if (newsSummary.getAds() != null) {
+            for (NewsSummary.AdsBean entity : newsSummary.getAds()) {
+                setValuesAndAddToList(pictureList, entity.getTitle(), entity.getImgsrc());
+            }
+        } else if (newsSummary.getImgextra() != null) {
+            for (NewsSummary.ImgextraBean entity : newsSummary.getImgextra()) {
+                setValuesAndAddToList(pictureList, null, entity.getImgsrc());
+            }
+        } else {
+            setValuesAndAddToList(pictureList, null, newsSummary.getImgsrc());
+        }
+
+        newsPhotoDetail.setPictures(pictureList);
+    }
+
+    private void setValuesAndAddToList(List<NewsPhotoDetail.Picture> pictureList, String title, String imgsrc) {
+        NewsPhotoDetail.Picture picture = new NewsPhotoDetail.Picture();
+        if (title != null) {
+            picture.setTitle(title);
+        }
+        picture.setImgSrc(imgsrc);
+
+        pictureList.add(picture);
+    }
+
+    private void goToPhotoDetailActivity(NewsPhotoDetail newsPhotoDetail) {
+        Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+        intent.putExtra("newsposturl", newsPhotoDetail);
+        startActivity(intent);
+    }
+
+    private void goToNewsDetailActivity(View view, int position) {
+        Intent intent = setIntent(position);
+        startActivity(view, intent);
+    }
+
+    private Intent setIntent(int position) {
+        List<NewsSummary> newsSummaryList = newsListAdapter.getData();
+
+        Intent intent = new Intent(mActivity, NewsDetailActivity.class);
+        intent.putExtra("newspostid", newsSummaryList.get(position).getPostid());
+        intent.putExtra("newsposturl", newsSummaryList.get(position).getImgsrc());
+        return intent;
+    }
+
+    private void startActivity(View view, Intent intent) {
+        ImageView newsSummaryPhotoIv = (ImageView) view.findViewById(R.id.news_summary_photo_iv);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(mActivity, newsSummaryPhotoIv, getResources().getString(R.string.transition_photos));
+            startActivity(intent, options.toBundle());
+        } else {
+
+            //让新的Activity从一个小的范围扩大到全屏
+            ActivityOptionsCompat options = ActivityOptionsCompat
+                    .makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, 0, 0);
+            ActivityCompat.startActivity(mActivity, intent, options.toBundle());
+        }
+    }
+
 
     @Override
     protected void initData() {
