@@ -29,6 +29,7 @@ import com.matthew.cn.newsreading.global.RxSchedulers;
 import com.matthew.cn.newsreading.ui.adapter.NewsFragmentPagerAdapter;
 import com.matthew.cn.newsreading.ui.fragment.GankFragment;
 import com.matthew.cn.newsreading.ui.fragment.NewsListFragment;
+import com.matthew.cn.newsreading.ui.fragment.VideoListFragment;
 import com.matthew.cn.newsreading.util.RxBus;
 import com.matthew.cn.newsreading.util.SnackBarUtil;
 import com.matthew.cn.newsreading.util.ToastUtils;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -165,7 +167,7 @@ public class MainActivity extends BaseActivity {
                 fragment=new GankFragment();
                 break;
             case R.id.nav_video:
-                fragment=new NewsListFragment();
+                fragment=new VideoListFragment();
                 break;
 
         }
@@ -225,6 +227,9 @@ public class MainActivity extends BaseActivity {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             if (isBackPressed) {
+                if (JCVideoPlayer.backPress()) {
+                    return;
+                }
                 super.onBackPressed();
                 return;
             }
@@ -342,5 +347,11 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 
 }

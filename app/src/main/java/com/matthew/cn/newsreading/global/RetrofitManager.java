@@ -25,6 +25,7 @@ import com.matthew.cn.newsreading.api.NewsListService;
 import com.matthew.cn.newsreading.entity.GirlData;
 import com.matthew.cn.newsreading.entity.NewsDetail;
 import com.matthew.cn.newsreading.entity.NewsSummary;
+import com.matthew.cn.newsreading.entity.VideoData;
 import com.matthew.cn.newsreading.util.NetUtil;
 
 import java.io.File;
@@ -192,4 +193,8 @@ public class RetrofitManager {
     public Observable<GirlData> getPhotoListObservable(int size, int page) {
         return mGankService.getPhotoList(size, page);
     }
+    public Observable<Map<String, List<VideoData>>> getVideoListObservable(String type, int startPage) {
+        return mNewsService.getVideoList(getCacheControl(),type, startPage);
+    }
+
 }

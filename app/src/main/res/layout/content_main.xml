@@ -68,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
         android:src="@mipmap/ic_arrow_upward"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 

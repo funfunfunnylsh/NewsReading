@@ -2,6 +2,7 @@ package com.matthew.cn.newsreading.api;
 
 import com.matthew.cn.newsreading.entity.NewsDetail;
 import com.matthew.cn.newsreading.entity.NewsSummary;
+import com.matthew.cn.newsreading.entity.VideoData;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,8 @@ public interface NewsListService {
     @GET("nc/article/{type}/{id}/{startPage}-20.html")
     Observable<Map<String, List<NewsSummary>>> getNewsList(
             @Header("Cache-Control") String cacheControl,
-            @Path("type") String type, @Path("id") String id,
+            @Path("type") String type,
+            @Path("id") String id,
             @Path("startPage") int startPage);
 
 
@@ -33,6 +35,13 @@ public interface NewsListService {
     @GET
     Observable<ResponseBody> getNewsBodyHtmlPhoto(
             @Url String photoPath);
+
+
+    @GET("nc/video/list/{type}/n/{startPage}-10.html")
+    Observable<Map<String, List<VideoData>>> getVideoList(
+            @Header("Cache-Control") String cacheControl,
+            @Path("type") String type,
+            @Path("startPage") int startPage);
 
 
 }

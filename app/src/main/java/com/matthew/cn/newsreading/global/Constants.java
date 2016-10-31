@@ -15,7 +15,7 @@ public class Constants {
     /**
      *视频
      */
-    public static final String VIDEO_BASEURL = "http://wthrcdn.etouch.cn/";
+    public static final String VIDEO_BASEURL = "http://c.m.163.com/";
 
 
     // 头条TYPE
@@ -24,6 +24,16 @@ public class Constants {
     public static final String HOUSE_TYPE = "house";
     // 其他TYPE
     public static final String OTHER_TYPE = "list";
+
+
+    // 热点视频
+    public static final String VIDEO_HOT_ID = "V9LG4B3A0";
+    // 娱乐视频
+    public static final String VIDEO_ENTERTAINMENT_ID = "V9LG4CHOR";
+    // 搞笑视频
+    public static final String VIDEO_FUN_ID = "V9LG4E6VR";
+    // 精品视频
+    public static final String VIDEO_CHOICE_ID = "00850FRB";
 
 
     /**

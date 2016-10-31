@@ -56,7 +56,7 @@ public class HostType {
     /**
      * 替代枚举的方案，使用IntDef保证类型安全
      */
-    @IntDef({NETEASE_NEWS_VIDEO, GANK_GIRL_PHOTO, NEWS_DETAIL_HTML_PHOTO})
+    @IntDef({NETEASE_NEWS_VIDEO, GANK_GIRL_PHOTO, NEWS_DETAIL_HTML_PHOTO,VIDEO})
     @Retention(RetentionPolicy.SOURCE)
     public @interface HostTypeChecker {
 

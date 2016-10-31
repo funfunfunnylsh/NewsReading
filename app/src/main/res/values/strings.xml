@@ -54,6 +54,10 @@
     <string name="picture_already_save_to">图片已保存至%1$s</string>
     <string name="set_wallpaper_success">设置壁纸成功</string>
     <string name="about_msg">
+
+    <string name="video_play_times">%1$s次播放</string>
+
+
         这是一款Material Design风格的新闻阅读App，采用MVP模式，基于Dagger2+RxJava+Retrofit2进行开发。
         \n新闻模块数据来源于网易，图片模块数据来源于干货集中营。
 
