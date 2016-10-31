@@ -72,10 +72,6 @@ public class Constants {
             case HostType.NEWS_DETAIL_HTML_PHOTO:
                 host = "http://kaku.com/";
                 break;
-            case HostType.VIDEO:
-
-                host = VIDEO_BASEURL;
-                break;
             default:
                 host = "";
                 break;
